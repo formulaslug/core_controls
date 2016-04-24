@@ -8,8 +8,8 @@ CANopen::CANopen(uint32_t id, uint32_t baud) : FlexCAN(baud) {
   mask.id = id;
   begin(mask);
 
-  pinMode(k_canLED, OUTPUT);
-  digitalWriteFast(k_canLED, 0);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWriteFast(LED_BUILTIN, 1);
 
   setFilters({0x620, 0x002});
 }
@@ -36,10 +36,10 @@ void CANopen::setFilters(std::initializer_list<uint32_t> filters) {
 
 bool CANopen::sendMessage(const CAN_message_t& msg) {
   if (write(msg)) {
-    digitalWriteFast(k_canLED, 0);
+    digitalWriteFast(LED_BUILTIN, 1);
     return true;
   } else {
-    digitalWriteFast(k_canLED, 1);
+    digitalWriteFast(LED_BUILTIN, 0);
     return false;
   }
 }
