@@ -9,7 +9,7 @@ CANopen::CANopen(uint32_t id, uint32_t baud) : FlexCAN(baud) {
   begin(mask);
 
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWriteFast(LED_BUILTIN, 1);
+  digitalWriteFast(LED_BUILTIN, 0);
 
   setFilters({0x620, 0x002});
 }
