@@ -4,6 +4,8 @@
 #include <initializer_list>
 #include <FlexCAN.h>
 
+constexpr uint32_t k_statusHeartbeat = 3000;
+
 class CANopen : public FlexCAN {
  public:
   CANopen(uint32_t id, uint32_t baud);
