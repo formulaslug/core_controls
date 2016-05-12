@@ -4,7 +4,8 @@
 #include <initializer_list>
 #include <FlexCAN.h>
 
-constexpr uint32_t k_statusHeartbeat = 3000;
+// Primary Teesy <-> Secondary Teensy: status, warning, and error codes
+constexpr char k_statusHeartbeat = 0x01;
 
 class CANopen : public FlexCAN {
  public:
