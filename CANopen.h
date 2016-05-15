@@ -15,6 +15,10 @@ class CANopen : public FlexCAN {
   void setFilters(std::initializer_list<uint32_t> filters);
   bool sendMessage(const CAN_message_t& msg);
   bool recvMessage(CAN_message_t& msg);
+
+  // Print CAN message to serial console
+  void printTx(const CAN_message_t& msg) const;
+  void printRx(const CAN_message_t& msg) const;
 };
 
 #endif // CAN_OPEN_H

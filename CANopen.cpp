@@ -47,3 +47,33 @@ bool CANopen::sendMessage(const CAN_message_t& msg) {
 bool CANopen::recvMessage(CAN_message_t& msg) {
   return read(msg);
 }
+
+void CANopen::printTx(const CAN_message_t& msg) const {
+  Serial.print("[EVENT]: CAN message TX >> [ id: 0x");
+
+  // Print the node's ID
+  Serial.print(msg.id, HEX);
+
+  Serial.print(", value: 0x");
+  for (uint32_t i = 0; i < msg.len; ++i) {
+    // Print message contents
+    Serial.print(msg.buf[i], HEX);
+  }
+
+  Serial.println(" ]");
+}
+
+void CANopen::printRx(const CAN_message_t& msg) const {
+  Serial.print("[EVENT]: CAN message RX << [ id: 0x");
+
+  // Print the node's ID
+  Serial.print(msg.id, HEX);
+
+  Serial.print(", value: 0x");
+  for (uint32_t i = 0; i < msg.len; ++i) {
+    // Print message contents
+    Serial.print(msg.buf[i], HEX);
+  }
+
+  Serial.println(" ]");
+}
