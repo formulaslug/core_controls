@@ -5,9 +5,8 @@
 #include <FlexCAN.h>
 
 // Primary Teesy <-> Secondary Teensy: status, warning, and error codes
-constexpr char k_statusHeartbeat = 0x01;
-// constexpr char cobid_statusHeartbeat = 0x01;
-// constexpr char cobid_TPDO5 = 0x241; // including throttle voltage payload
+constexpr char cobid_statusHeartbeat = 0x01;
+constexpr char cobid_TPDO5 = 0x241; // including throttle voltage payload
 
 class CANopen : public FlexCAN {
  public:
