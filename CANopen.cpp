@@ -49,14 +49,15 @@ bool CANopen::recvMessage(CAN_message_t& msg) {
 }
 
 void CANopen::printTx(const CAN_message_t& msg) const {
-  Serial.print("[EVENT]: CAN message TX >> [ id: 0x");
+  Serial.print("[EVENT]: CAN message TX >> [ COB-ID: 0x");
 
   // Print the node's ID
   Serial.print(msg.id, HEX);
 
-  Serial.print(", value: 0x");
+  Serial.print(", payload: ");
   for (uint32_t i = 0; i < msg.len; ++i) {
-    // Print message contents
+    Serial.print(" 0x");
+    // Print every byte of message payload
     Serial.print(msg.buf[i], HEX);
   }
 
@@ -64,14 +65,15 @@ void CANopen::printTx(const CAN_message_t& msg) const {
 }
 
 void CANopen::printRx(const CAN_message_t& msg) const {
-  Serial.print("[EVENT]: CAN message RX << [ id: 0x");
+  Serial.print("[EVENT]: CAN message RX >> [ COB-ID: 0x");
 
   // Print the node's ID
   Serial.print(msg.id, HEX);
 
-  Serial.print(", value: 0x");
+  Serial.print(", payload: ");
   for (uint32_t i = 0; i < msg.len; ++i) {
-    // Print message contents
+    Serial.print(" 0x");
+    // Print every byte of message payload
     Serial.print(msg.buf[i], HEX);
   }
 
