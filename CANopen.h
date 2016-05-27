@@ -5,9 +5,9 @@
 #include <FlexCAN.h>
 
 // Primary Teesy <-> Secondary Teensy: status, warning, and error codes
-// MAX LENGTH of 12 bits, only the LSB 12 are used
-constexpr uint16_t cobid_statusHeartbeat = 0x01;
-constexpr uint16_t cobid_TPDO5 = 0x241; // including throttle voltage payload
+// MAX LENGTH of 12 bits, only the LSB 12 should be used
+constexpr uint32_t cobid_statusHeartbeat = 0x01;
+constexpr uint32_t cobid_TPDO5 = 0x241; // including throttle voltage payload
 
 class CANopen : public FlexCAN {
  public:
