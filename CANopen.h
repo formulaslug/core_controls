@@ -25,13 +25,17 @@ class CANopen : public FlexCAN {
   bool recvMessage(CAN_message_t& msg);
 
   // queues a message to be transmitted
-  void queueTx(CAN_message_t msg);
+  void queueTxMsg(CAN_message_t msg);
+  uint8_t txQueueSize();
+  // dequeues a message received
+  CAN_message_t dequeueRxMsg();
+  uint8_t rxQueueSize();
 
-  // listen to CAN bus and Enqueue/Dequeue messages
+  // listen to CAN bus and Enqueue/Dequeue messages accordingly
   void processTx();
   void processRx();
 
-  // print out all messages currently in txLogsQueue and rxQueue, dequeueing them from each
+  // print out all messages currently in txLogsQueue and rxLogsQueue, dequeueing them from each
   void printTxAll();
   void printRxAll();
 
@@ -40,6 +44,7 @@ class CANopen : public FlexCAN {
   CircularBuffer<CAN_message_t> txQueue{10};
   CircularBuffer<CAN_message_t> txLogsQueue{10};
   CircularBuffer<CAN_message_t> rxQueue{10};
+  CircularBuffer<CAN_message_t> rxLogsQueue{10};
 
   // print CAN message to serial console
   void printTxMsg(const CAN_message_t& msg) const;

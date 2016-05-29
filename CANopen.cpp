@@ -102,6 +102,7 @@ void CANopen::processRx() {
   static CAN_message_t rxMsgTmp;
   while (recvMessage(rxMsgTmp)) {
     rxQueue.PushBack(rxMsgTmp);
+    rxLogsQueue.PushBack(rxMsgTmp); // TODO: figure out a way to remove this duplication
   }
 }
 
@@ -123,19 +124,43 @@ void CANopen::printTxAll() {
  * @desc Prints over serial all messages currently in the rx queue
  */
 void CANopen::printRxAll() {
-  static CAN_message_t queueMsg;
-  queueMsg = rxQueue.PopFront();
-  while (queueMsg.id) {
+  static CAN_message_t msg;
+  msg = rxLogsQueue.PopFront();
+  while (msg.id) {
     // print
-    printRxMsg(queueMsg);
+    printRxMsg(msg);
     // dequeue another message
-    queueMsg = rxQueue.PopFront();
+    msg = rxLogsQueue.PopFront();
   }
 }
 
 /**
- * @desc Queues a packaged message to be transmitted over the CAN bus
+ * @desc Enqueues a packaged message to be transmitted over the CAN bus
  */
-void CANopen::queueTx(CAN_message_t msg) {
+void CANopen::queueTxMsg(CAN_message_t msg) {
   txQueue.PushBack(msg);
+}
+
+/**
+ * @desc Dequeues a packaged message to be unpacked and used
+ * @param msg The message at the front of the rx queue
+ */
+CAN_message_t CANopen::dequeueRxMsg() {
+  return rxQueue.PopFront();
+}
+
+/**
+ * @desc Gets the current size of the tx queue
+ * @return The size
+ */
+uint8_t CANopen::txQueueSize() {
+  return txQueue.NumElems();
+}
+
+/**
+ * @desc Gets the current size of the rx queue
+ * @return The size
+ */
+uint8_t CANopen::rxQueueSize() {
+  return rxQueue.NumElems();
 }
