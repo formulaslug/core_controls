@@ -48,7 +48,7 @@ bool CANopen::recvMessage(CAN_message_t& msg) {
   return read(msg);
 }
 
-void CANopen::printTx(const CAN_message_t& msg) const {
+void CANopen::printTxMsg(const CAN_message_t& msg) const {
   Serial.print("[EVENT]: CAN message TX >> [ COB-ID: 0x");
 
   // Print the node's ID
@@ -64,7 +64,7 @@ void CANopen::printTx(const CAN_message_t& msg) const {
   Serial.println(" ]");
 }
 
-void CANopen::printRx(const CAN_message_t& msg) const {
+void CANopen::printRxMsg(const CAN_message_t& msg) const {
   Serial.print("[EVENT]: CAN message RX >> [ COB-ID: 0x");
 
   // Print the node's ID
@@ -78,4 +78,64 @@ void CANopen::printRx(const CAN_message_t& msg) const {
   }
 
   Serial.println(" ]");
+}
+
+/**
+ * @desc Transmits all enqueued messages, in g_canTxQueue, of type CAN_message_t. Enqueue
+ *       them onto the transmit logs queue after so that they can be printed
+ */
+void CANopen::processTx() {
+  while (txQueue.NumElems() > 0) {
+    // write message
+    sendMessage(txQueue[0]);
+    // enqueue them onto the logs queue
+    txLogsQueue.PushBack(txQueue[0]);
+    // dequeue new message
+    txQueue.PopFront();
+  }
+}
+
+/**
+ * @desc Enqueue any messages apearing on the CAN bus
+ */
+void CANopen::processRx() {
+  static CAN_message_t rxMsgTmp;
+  while (recvMessage(rxMsgTmp)) {
+    rxQueue.PushBack(rxMsgTmp);
+  }
+}
+
+/**
+ * @desc Prints over serial all messages currently in the tx logs queue
+ */
+void CANopen::printTxAll() {
+  static CAN_message_t queueMsg;
+  queueMsg = txLogsQueue.PopFront();
+  while (queueMsg.id) {
+    // print
+    printTxMsg(queueMsg);
+    // dequeue another message
+    queueMsg = txLogsQueue.PopFront();
+  }
+}
+
+/**
+ * @desc Prints over serial all messages currently in the rx queue
+ */
+void CANopen::printRxAll() {
+  static CAN_message_t queueMsg;
+  queueMsg = rxQueue.PopFront();
+  while (queueMsg.id) {
+    // print
+    printRxMsg(queueMsg);
+    // dequeue another message
+    queueMsg = rxQueue.PopFront();
+  }
+}
+
+/**
+ * @desc Queues a packaged message to be transmitted over the CAN bus
+ */
+void CANopen::queueTx(CAN_message_t msg) {
+  txQueue.PushBack(msg);
 }

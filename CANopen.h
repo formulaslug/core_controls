@@ -3,6 +3,7 @@
 
 #include <initializer_list>
 #include <FlexCAN.h>
+#include "CircularBuffer.h"
 
 // COB-IDs: MAX LENGTH of 12 bits, only the LSB 12 should be used
 constexpr uint32_t cobid_TPDO5 = 0x241; // including throttle voltage payload
@@ -23,9 +24,26 @@ class CANopen : public FlexCAN {
   bool sendMessage(const CAN_message_t& msg);
   bool recvMessage(CAN_message_t& msg);
 
-  // Print CAN message to serial console
-  void printTx(const CAN_message_t& msg) const;
-  void printRx(const CAN_message_t& msg) const;
+  // queues a message to be transmitted
+  void queueTx(CAN_message_t msg);
+
+  // listen to CAN bus and Enqueue/Dequeue messages
+  void processTx();
+  void processRx();
+
+  // print out all messages currently in txLogsQueue and rxQueue, dequeueing them from each
+  void printTxAll();
+  void printRxAll();
+
+ private:
+  // circular buffers to hold CAN_message_t instances
+  CircularBuffer<CAN_message_t> txQueue{10};
+  CircularBuffer<CAN_message_t> txLogsQueue{10};
+  CircularBuffer<CAN_message_t> rxQueue{10};
+
+  // print CAN message to serial console
+  void printTxMsg(const CAN_message_t& msg) const;
+  void printRxMsg(const CAN_message_t& msg) const;
 };
 
 #endif // CAN_OPEN_H
