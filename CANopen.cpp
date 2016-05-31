@@ -48,7 +48,7 @@ bool CANopen::recvMessage(CAN_message_t& msg) {
   return read(msg);
 }
 
-void CANopen::printTxMsg(const CAN_message_t& msg) const {
+void CANopen::printTxMessage(const CAN_message_t& msg) const {
   Serial.print("[EVENT]: CAN message TX >> [ COB-ID: 0x");
 
   // Print the node's ID
@@ -64,7 +64,7 @@ void CANopen::printTxMsg(const CAN_message_t& msg) const {
   Serial.println(" ]");
 }
 
-void CANopen::printRxMsg(const CAN_message_t& msg) const {
+void CANopen::printRxMessage(const CAN_message_t& msg) const {
   Serial.print("[EVENT]: CAN message RX >> [ COB-ID: 0x");
 
   // Print the node's ID
@@ -84,7 +84,7 @@ void CANopen::printRxMsg(const CAN_message_t& msg) const {
  * @desc Transmits all enqueued messages, in g_canTxQueue, of type CAN_message_t. Enqueue
  *       them onto the transmit logs queue after so that they can be printed
  */
-void CANopen::processTx() {
+void CANopen::processTxMessages() {
   while (txQueue.Size() > 0) {
     // write message
     sendMessage(txQueue[0]);
@@ -98,11 +98,11 @@ void CANopen::processTx() {
 /**
  * @desc Enqueue any messages apearing on the CAN bus
  */
-void CANopen::processRx() {
-  static CAN_message_t rxMsgTmp;
-  while (recvMessage(rxMsgTmp)) {
-    rxQueue.PushBack(rxMsgTmp);
-    rxLogsQueue.PushBack(rxMsgTmp); // TODO: figure out a way to remove this duplication
+void CANopen::processRxMessages() {
+  static CAN_message_t rxMessageTmp;
+  while (recvMessage(rxMessageTmp)) {
+    rxQueue.PushBack(rxMessageTmp);
+    rxLogsQueue.PushBack(rxMessageTmp); // TODO: figure out a way to remove this duplication
   }
 }
 
@@ -110,13 +110,13 @@ void CANopen::processRx() {
  * @desc Prints over serial all messages currently in the tx logs queue
  */
 void CANopen::printTxAll() {
-  static CAN_message_t queueMsg;
-  queueMsg = txLogsQueue.PopFront();
-  while (queueMsg.id) {
+  static CAN_message_t queueMessage;
+  queueMessage = txLogsQueue.PopFront();
+  while (queueMessage.id) {
     // print
-    printTxMsg(queueMsg);
+    printTxMessage(queueMessage);
     // dequeue another message
-    queueMsg = txLogsQueue.PopFront();
+    queueMessage = txLogsQueue.PopFront();
   }
 }
 
@@ -128,7 +128,7 @@ void CANopen::printRxAll() {
   msg = rxLogsQueue.PopFront();
   while (msg.id) {
     // print
-    printRxMsg(msg);
+    printRxMessage(msg);
     // dequeue another message
     msg = rxLogsQueue.PopFront();
   }
@@ -137,7 +137,7 @@ void CANopen::printRxAll() {
 /**
  * @desc Enqueues a packaged message to be transmitted over the CAN bus
  */
-void CANopen::queueTxMsg(CAN_message_t msg) {
+void CANopen::queueTxMessage(CAN_message_t msg) {
   txQueue.PushBack(msg);
 }
 
@@ -145,7 +145,7 @@ void CANopen::queueTxMsg(CAN_message_t msg) {
  * @desc Dequeues a packaged message to be unpacked and used
  * @param msg The message at the front of the rx queue
  */
-CAN_message_t CANopen::dequeueRxMsg() {
+CAN_message_t CANopen::dequeueRxMessage() {
   return rxQueue.PopFront();
 }
 
