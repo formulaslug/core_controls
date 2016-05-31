@@ -108,23 +108,24 @@ void CircularBuffer<T>::Reset() {
 }
 
 /**
- * @return number of elements used in internal buffer.
+ * @return Number of elements in the buffer.
  */
 template <class T>
-size_t CircularBuffer<T>::NumElems() const {
+size_t CircularBuffer<T>::Size() const {
   return m_length;
 }
 
 /**
- * @return size of internal buffer.
+ * @return Size of the storage space currently allocated, expressed in terms
+ *         of elements.
  */
 template <class T>
-size_t CircularBuffer<T>::Size() const {
+size_t CircularBuffer<T>::Capacity() const {
   return m_data.size();
 }
 
 /**
- * @return element at index starting from front of buffer
+ * @return element at index starting from front of buffer.
  */
 template <class T>
 T& CircularBuffer<T>::operator[](size_t index) {
@@ -132,7 +133,7 @@ T& CircularBuffer<T>::operator[](size_t index) {
 }
 
 /**
- * @return element at index starting from front of buffer
+ * @return Element at index starting from front of buffer.
  */
 template <class T>
 const T& CircularBuffer<T>::operator[](size_t index) const {

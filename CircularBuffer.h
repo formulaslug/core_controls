@@ -26,8 +26,8 @@ class CircularBuffer {
   T PopBack();
   void Resize(size_t size);
   void Reset();
-  size_t NumElems() const;
   size_t Size() const;
+  size_t Capacity() const;
 
   T& operator[](size_t index);
   const T& operator[](size_t index) const;

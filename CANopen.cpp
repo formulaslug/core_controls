@@ -85,7 +85,7 @@ void CANopen::printRxMsg(const CAN_message_t& msg) const {
  *       them onto the transmit logs queue after so that they can be printed
  */
 void CANopen::processTx() {
-  while (txQueue.NumElems() > 0) {
+  while (txQueue.Size() > 0) {
     // write message
     sendMessage(txQueue[0]);
     // enqueue them onto the logs queue
@@ -154,7 +154,7 @@ CAN_message_t CANopen::dequeueRxMsg() {
  * @return The size
  */
 uint8_t CANopen::txQueueSize() {
-  return txQueue.NumElems();
+  return txQueue.Size();
 }
 
 /**
@@ -162,5 +162,5 @@ uint8_t CANopen::txQueueSize() {
  * @return The size
  */
 uint8_t CANopen::rxQueueSize() {
-  return rxQueue.NumElems();
+  return rxQueue.Size();
 }
