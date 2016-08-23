@@ -8,7 +8,8 @@
  */
 template <uint8_t DebounceCount>
 class ButtonTracker {
-  static_assert(DebounceCount >= 1 && DebounceCount <= 8, "Debounce count out of range");
+  static_assert(DebounceCount >= 1 && DebounceCount <= 8,
+                "Debounce count out of range");
 
  public:
   /* @param logicLow If true, considers DIO high signal as pressed. Otherwise,
@@ -40,4 +41,4 @@ class ButtonTracker {
 
 #include "ButtonTracker.inl"
 
-#endif // BUTTON_TRACKER_H
+#endif  // BUTTON_TRACKER_H

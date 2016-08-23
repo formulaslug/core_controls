@@ -14,9 +14,7 @@ CANopen::CANopen(uint32_t id, uint32_t baud) : FlexCAN(baud) {
   setFilters({0x620, 0x002});
 }
 
-CANopen::~CANopen() {
-  end();
-}
+CANopen::~CANopen() { end(); }
 
 void CANopen::setFilters(std::initializer_list<uint32_t> filters) {
   CAN_filter_t filter;
@@ -44,9 +42,7 @@ bool CANopen::sendMessage(const CAN_message_t& msg) {
   }
 }
 
-bool CANopen::recvMessage(CAN_message_t& msg) {
-  return read(msg);
-}
+bool CANopen::recvMessage(CAN_message_t& msg) { return read(msg); }
 
 void CANopen::printTxMessage(const CAN_message_t& msg) const {
   Serial.print("[EVENT]: CAN message TX >> [ COB-ID: 0x");
@@ -81,8 +77,9 @@ void CANopen::printRxMessage(const CAN_message_t& msg) const {
 }
 
 /**
- * @desc Transmits all enqueued messages, in g_canTxQueue, of type CAN_message_t. Enqueue
- *       them onto the transmit logs queue after so that they can be printed
+ * @desc Transmits all enqueued messages, in g_canTxQueue, of type
+ *       CAN_message_t. Enqueue them onto the transmit logs queue after so that
+ *       they can be printed
  */
 void CANopen::processTxMessages() {
   while (txQueue.Size() > 0) {
@@ -102,7 +99,9 @@ void CANopen::processRxMessages() {
   static CAN_message_t rxMessageTmp;
   while (recvMessage(rxMessageTmp)) {
     rxQueue.PushBack(rxMessageTmp);
-    rxLogsQueue.PushBack(rxMessageTmp); // TODO: figure out a way to remove this duplication
+
+    // TODO: figure out a way to remove this duplication
+    rxLogsQueue.PushBack(rxMessageTmp);
   }
 }
 
@@ -137,30 +136,22 @@ void CANopen::printRxAll() {
 /**
  * @desc Enqueues a packaged message to be transmitted over the CAN bus
  */
-void CANopen::queueTxMessage(CAN_message_t msg) {
-  txQueue.PushBack(msg);
-}
+void CANopen::queueTxMessage(CAN_message_t msg) { txQueue.PushBack(msg); }
 
 /**
  * @desc Dequeues a packaged message to be unpacked and used
  * @param msg The message at the front of the rx queue
  */
-CAN_message_t CANopen::dequeueRxMessage() {
-  return rxQueue.PopFront();
-}
+CAN_message_t CANopen::dequeueRxMessage() { return rxQueue.PopFront(); }
 
 /**
  * @desc Gets the current size of the tx queue
  * @return The size
  */
-uint8_t CANopen::txQueueSize() {
-  return txQueue.Size();
-}
+uint8_t CANopen::txQueueSize() { return txQueue.Size(); }
 
 /**
  * @desc Gets the current size of the rx queue
  * @return The size
  */
-uint8_t CANopen::rxQueueSize() {
-  return rxQueue.Size();
-}
+uint8_t CANopen::rxQueueSize() { return rxQueue.Size(); }
