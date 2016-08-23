@@ -1,7 +1,7 @@
 #ifndef BUTTON_TRACKER_H
 #define BUTTON_TRACKER_H
 
-#include <cstdint>
+#include <stdint.h>
 
 /* @tparam debounceCount Number of samples used when determining state change.
  *                       Should be between 1 and 8 inclusive.
