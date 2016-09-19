@@ -1,3 +1,5 @@
+// Copyright (c) Formula Slug 2016. All Rights Reserved.
+
 #ifndef CAN_OPEN_H
 #define CAN_OPEN_H
 

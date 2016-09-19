@@ -1,3 +1,5 @@
+// Copyright (c) Formula Slug 2016. All Rights Reserved.
+
 #include <Arduino.h>
 
 namespace std {

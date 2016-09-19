@@ -1,3 +1,5 @@
+// Copyright (c) Formula Slug 2016. All Rights Reserved.
+
 #include "CANopen.h"
 #include <kinetis_flexcan.h>
 

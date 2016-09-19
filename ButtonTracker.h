@@ -1,3 +1,5 @@
+// Copyright (c) Formula Slug 2016. All Rights Reserved.
+
 #ifndef BUTTON_TRACKER_H
 #define BUTTON_TRACKER_H
 
