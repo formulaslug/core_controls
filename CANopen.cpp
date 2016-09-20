@@ -1,6 +1,7 @@
 // Copyright (c) Formula Slug 2016. All Rights Reserved.
 
 #include "CANopen.h"
+
 #include <kinetis_flexcan.h>
 
 CANopen::CANopen(uint32_t id, uint32_t baud) : FlexCAN(baud) {
