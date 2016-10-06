@@ -4,6 +4,8 @@
 
 #include <kinetis_flexcan.h>
 
+#include <cmath>
+
 CANopen::CANopen(uint32_t id, uint32_t baud) : FlexCAN(baud) {
   CAN_filter_t mask;
   mask.rtr = 0;
@@ -48,35 +50,47 @@ bool CANopen::sendMessage(const CAN_message_t& msg) {
 bool CANopen::recvMessage(CAN_message_t& msg) { return read(msg); }
 
 void CANopen::printTxMessage(const CAN_message_t& msg) const {
-  Serial.print("[EVENT]: CAN message TX >> [ COB-ID: 0x");
+  Serial.print("[CAN TX] COB-ID:");
+
+  // Pad left of shorter ID with spaces
+  for (uint32_t i = 0; i < 8 - std::log(msg.id) / std::log(16); ++i) {
+    Serial.print(" ");
+  }
+  Serial.print("0x");
 
   // Print the node's ID
   Serial.print(msg.id, HEX);
 
-  Serial.print(", payload: ");
+  Serial.print("  data:");
   for (uint32_t i = 0; i < msg.len; ++i) {
     Serial.print(" 0x");
     // Print every byte of message payload
     Serial.print(msg.buf[i], HEX);
   }
 
-  Serial.println(" ]");
+  Serial.println("");
 }
 
 void CANopen::printRxMessage(const CAN_message_t& msg) const {
-  Serial.print("[EVENT]: CAN message RX >> [ COB-ID: 0x");
+  Serial.print("[CAN RX] COB-ID:");
+
+  // Pad left of shorter ID with spaces
+  for (uint32_t i = 0; i < 8 - std::log(msg.id) / std::log(16); ++i) {
+    Serial.print(" ");
+  }
+  Serial.print("0x");
 
   // Print the node's ID
   Serial.print(msg.id, HEX);
 
-  Serial.print(", payload: ");
+  Serial.print("  data:");
   for (uint32_t i = 0; i < msg.len; ++i) {
     Serial.print(" 0x");
     // Print every byte of message payload
     Serial.print(msg.buf[i], HEX);
   }
 
-  Serial.println(" ]");
+  Serial.println("");
 }
 
 /**

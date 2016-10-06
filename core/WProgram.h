@@ -48,8 +48,8 @@ void noTone(uint8_t pin);
 #if defined(__MK20DX128__) || defined(__MK20DX256__) || \
   defined(__MK64FX512__) || defined(__MK66FX1M0__)
   #ifdef __cplusplus
-extern "C" {
-extern void* memcpy(void* dst, const void* src, size_t count);
+namespace std {
+extern "C" void* memcpy(void* dst, const void* src, size_t count);
 }
   #else
 extern void* memcpy(void* dst, const void* src, size_t count);
