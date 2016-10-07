@@ -41,6 +41,7 @@ struct[[gnu::packed]] TPDO5 {
   uint8_t driveSelect1Switch : 1;
   uint8_t driveSelect2Switch : 1;
   uint8_t reverseSwitch : 1;
+  uint8_t padding : 4;
 };
 
 #endif  // CANOPEN_PDO_H
