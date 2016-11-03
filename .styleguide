@@ -27,6 +27,7 @@ modifiableFolderExclude {
 }
 
 modifiableFileExclude {
+  \.git$
 }
 
 includeRelated {
