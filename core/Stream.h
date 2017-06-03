@@ -32,24 +32,24 @@ class Stream : public Print {
   virtual void flush() = 0;
 
   void setTimeout(unsigned long timeout);
-  bool find(char* target);
-  bool find(uint8_t* target) { return find((char*) target); }
-  bool find(char* target, size_t length);
-  bool find(uint8_t* target,
-      size_t length) { return find((char*) target, length); }
-  bool findUntil(char* target, char* terminator);
-  bool findUntil(uint8_t* target, char* terminator) {
+  bool find(const char* target);
+  bool find(const uint8_t* target) { return find((char*) target); }
+  bool find(const char* target, size_t length);
+  bool find(const uint8_t* target,
+      size_t length) { return find((const char*) target, length); }
+  bool findUntil(const char* target, const char* terminator);
+  bool findUntil(const uint8_t* target, const char* terminator) {
     return findUntil(
       (char*) target,
       terminator);
   }
-  bool findUntil(char* target, size_t targetLen, char* terminate,
+  bool findUntil(const char* target, size_t targetLen, const char* terminate,
       size_t termLen);
-  bool findUntil(uint8_t* target,
+  bool findUntil(const uint8_t* target,
       size_t targetLen,
-      char* terminate,
+      const char* terminate,
       size_t termLen) {
-    return findUntil((char*) target,
+    return findUntil((const char*) target,
       targetLen,
       terminate,
       termLen);
