@@ -2,7 +2,6 @@
 
 #include "CANopenPDO.h"
 
-#include <climits>
 #include <cstdlib>
 
 HeartbeatMessage::HeartbeatMessage(uint32_t id) {
