@@ -21,13 +21,11 @@ genFileExclude {
 }
 
 modifiableFolderExclude {
-  \.git
   core
   libs
 }
 
 modifiableFileExclude {
-  \.git$
 }
 
 includeRelated {
