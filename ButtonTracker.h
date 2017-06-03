@@ -41,6 +41,6 @@ class ButtonTracker {
   bool m_isPressed = false;
 };
 
-#include "ButtonTracker.inl"
+#include "ButtonTracker.inc"
 
 #endif  // BUTTON_TRACKER_H
