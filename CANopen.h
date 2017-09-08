@@ -6,6 +6,7 @@
 #include <initializer_list>
 
 #include <FlexCAN.h>
+
 #include "CircularBuffer.h"
 
 class CANopen : public FlexCAN {
